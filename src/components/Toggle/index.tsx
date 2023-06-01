@@ -13,11 +13,14 @@ import ImageLua from '../../images/lua.png';
 
 import { styles } from './style';
 
+import { useMode } from '../../context';
+
 const ButtonAnimated = Animated.createAnimatedComponent(Pressable);
 
 export const Toggle = () => {
   const [image, setImage] = useState(ImageSol);
   const toggleAnimated = useSharedValue(0);
+  const { changeType } = useMode();
 
   const styleButtonAnimation = useAnimatedStyle(() => {
     return {
@@ -58,9 +61,11 @@ export const Toggle = () => {
         if (toggleAnimated.value === 1) {
           toggleAnimated.value = 0;
           setImage(ImageSol);
+          changeType('sun');
         } else {
           toggleAnimated.value = 1;
           setImage(ImageLua);
+          changeType('moon');
         }
       }}
       style={[styles.container, styleButtonAnimation]}
